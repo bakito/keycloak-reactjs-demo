@@ -7,7 +7,7 @@ Demo for React.JS and Keycloak SSO integration.
 - based on React version >= 16.3 and `create-react-app`
 - Keycloak server must be at least version 4.x
 
-## !!! Important Notice !!! 
+## !!! Important Notice !!!
 
 > **This demo is just for showing one possibility on how to configure the app when using Keycloak and it requires a certain knowledge about Keycloak SSO (installation, operation, configuration), see http://www.keycloak.org.**
 
@@ -23,3 +23,5 @@ The URLs in the `securityDefinitions` section shows my local Keycloak setup, you
 ()Also don't forget to adjust the host/port in the `proxy` section of `package.json`, if you run your service on ohters than default.)
 
 _(currentlly I'm working on a ready-to-use-service which I can provide for your convenience)_
+
+docker run --name keycloak -e KEYCLOAK_USER=USERNAME -e KEYCLOAK_PASSWORD=PASSWORD -p 8080:8080 -d jboss/keycloak
