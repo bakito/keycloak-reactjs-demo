@@ -38,20 +38,23 @@ kc.init({ onLoad: "login-required", token, refreshToken }).then(
   }
 );
 
-axios.interceptors.request.use(config =>
-  kc
-    .updateToken(5)
-    .then(refreshed => {
-      if (refreshed) {
-        updateLocalStorage();
-      }
-      config.headers.Authorization = "Bearer " + kc.token;
-      return Promise.resolve(config);
-    })
-    .catch(() => {
-      kc.login();
-    })
-);
+axios.interceptors.request.use(config => {
+  const promise = new Promise((resolve, reject) => {
+    kc.updateToken(5)
+      .success(refreshed => {
+        if (refreshed) {
+          updateLocalStorage();
+        }
+        config.headers.Authorization = "Bearer " + kc.token;
+        return resolve(config);
+      })
+      .error(() => {
+        kc.login();
+        return reject(config);
+      });
+  });
+  return promise;
+});
 
 const updateLocalStorage = () => {
   localStorage.setItem("kc_token", kc.token);
